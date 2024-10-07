@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/joho/godotenv"
 )
 
 type Weather struct {
@@ -37,20 +39,43 @@ type Weather struct {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+		os.Exit(1)
+	}
+
 	q := "New_delhi"
 
 	if len(os.Args) >= 2 {
 		q = os.Args[1]
 	}
 
-	res, err := http.Get("http://api.weatherapi.com/v1/forecast.json?key=33680b5feacd457f9c2181101240610&q=" + q + "&days=1&aqi=no&alerts=no")
+	apiKey := os.Getenv("WEATHER_API_KEY")
+	if apiKey == "" {
+		fmt.Println("Please set your WEATHER_API_KEY environment variable.")
+		os.Exit(1)
+	}
+
+	baseURL := "http://api.weatherapi.com/v1/forecast.json"
+	params := url.Values{}
+	params.Add("key", apiKey)
+	params.Add("q", q)
+	params.Add("days", "1")
+	params.Add("aqi", "no")
+	params.Add("alerts", "no")
+
+	fullURL := fmt.Sprintf("%s?%s", baseURL, params.Encode())
+
+	res, err := http.Get(fullURL)
 	if err != nil {
 		panic(err)
 	}
 	defer res.Body.Close()
 
-	if res.StatusCode != 200 {
-		panic("Weather API not available")
+	if res.StatusCode != http.StatusOK {
+		fmt.Println("Weather API not available")
+		os.Exit(1)
 	}
 
 	body, err := io.ReadAll(res.Body)
@@ -67,7 +92,7 @@ func main() {
 	location, current, hours := weather.Location, weather.Current, weather.Forecast.Forecastday[0].Hour
 
 	fmt.Printf(
-		"%s, %s: %.0fC, %s\n",
+		"%s, %s: %.0f°C, %s\n",
 		location.Name,
 		location.Country,
 		current.TempC,
@@ -82,7 +107,7 @@ func main() {
 		}
 
 		message := fmt.Sprintf(
-			"%s - %.0fC, %.0f%%, %s\n",
+			"%s - %.0f°C, %.0f%%, %s\n",
 			date.Format("15:04"),
 			hour.TempC,
 			hour.ChanceOfRain,
@@ -90,9 +115,9 @@ func main() {
 		)
 
 		if hour.ChanceOfRain < 40 {
-			fmt.Print(message)
+			color.Yellow(message)
 		} else {
-			color.Red(message)
+			color.Blue(message)
 		}
 	}
 }
