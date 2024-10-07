@@ -39,7 +39,7 @@ type Weather struct {
 }
 
 func main() {
-	err := godotenv.Load()
+	err := godotenv.Load("/home/ashish/Dev/Projects/4cast/.env")
 	if err != nil {
 		fmt.Println("Error loading .env file")
 		os.Exit(1)
