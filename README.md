@@ -36,6 +36,22 @@ go build -o 4cast
 
 Replace `[location]` with the desired city name (e.g., `New_delhi`). If no location is provided, it defaults to "New_delhi".
 
+<br>
+
+**Configure Global CLI Access (Optional)**
+
+- Move the executable to a directory in your system’s PATH (e.g., `/usr/local/bin`):
+
+```bash
+sudo mv 4cast /usr/local/bin/
+```
+
+- Once the executable is set up, you can run `4cast` from any directory:
+
+```bash
+4cast [location]
+```
+
 ## 🔧 Usage
 
 ```bash
