@@ -45,10 +45,8 @@ Replace `[location]` with the desired city name (e.g., `New_delhi`). If no locat
 **Example Output**
 
 ```bash
-Weather for New Delhi, India
-
-Current Temperature: 30°C
-Condition: Clear
+New Delhi, India
+30°C, Clear
 
 15:00 - 31°C, 10%, Clear
 16:00 - 30°C, 20%, Partly Cloudy
