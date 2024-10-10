@@ -34,7 +34,7 @@ go build -o 4cast
 ./4cast [location]
 ```
 
-Replace `[location]` with the desired city name (e.g., `New_delhi`). If no location is provided, it defaults to "New_delhi".
+Replace `[location]` with the desired city name (e.g., `Pune`). If no location is provided, it defaults to "New_delhi".
 
 <br>
 
