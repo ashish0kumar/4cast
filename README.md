@@ -1,4 +1,4 @@
-# ⛅ 4cast
+# 4cast
 
 4cast is a simple CLI application written in Go that provides current weather information and hourly forecasts for a specified location. 
 It fetches data from the [WeatherAPI](https://www.weatherapi.com/) and displays it in a user-friendly format.
