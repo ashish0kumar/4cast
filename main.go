@@ -69,9 +69,9 @@ func main() {
 	location, current, hours := weather.Location, weather.Current, weather.Forecast.Forecastday[0].Hour
 
 	fmt.Println()
-	fmt.Printf("Weather for %s, %s\n\n", location.Name, location.Country)
+	fmt.Printf("%s, %s\n", location.Name, location.Country)
 	fmt.Printf(
-		"Current Temperature: %.0f°C\nCondition: %s\n\n",
+		"%.0f°C, %s\n\n",
 		current.TempC,
 		current.Condition.Text,
 	)
